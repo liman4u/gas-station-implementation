@@ -99,4 +99,20 @@ public class GasStationManagerTest extends BaseGasStationManagerTest{
     }
     
     
+     /**
+     * Test for invalid amount in litres
+     * 
+     * @throws InterruptedException 
+     */
+    @Test(expected = InvalidParameterException.class)
+    public void testInvalidAmountInLitres() throws InterruptedException{
+        executorService.execute(new Customer(GasType.REGULAR, 0, REGULAR_FUEL_PRICE,1));
+        
+        executorService.shutdown();
+        
+        executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
+        
+    }
+    
+    
 }
