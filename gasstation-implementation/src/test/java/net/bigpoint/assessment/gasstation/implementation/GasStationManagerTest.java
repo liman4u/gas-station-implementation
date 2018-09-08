@@ -1,5 +1,6 @@
 package net.bigpoint.assessment.gasstation.implementation;
 
+import java.security.InvalidParameterException;
 import java.util.concurrent.TimeUnit;
 import net.bigpoint.assessment.gasstation.GasType;
 import net.bigpoint.assessment.gasstation.exceptions.GasTooExpensiveException;
@@ -81,4 +82,21 @@ public class GasStationManagerTest extends BaseGasStationManagerTest{
         executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
         
     }
+    
+     /**
+     * Test for invalid gas type
+     * 
+     * @throws InterruptedException 
+     */
+    @Test(expected = InvalidParameterException.class)
+    public void testInvalidGasType() throws InterruptedException{
+        executorService.execute(new Customer(null, REGULAR_FUEL_LITRES, REGULAR_FUEL_PRICE,1));
+        
+        executorService.shutdown();
+        
+        executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
+        
+    }
+    
+    
 }
