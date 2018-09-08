@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Logger;
 import net.bigpoint.assessment.gasstation.GasPump;
 import net.bigpoint.assessment.gasstation.GasStation;
 import net.bigpoint.assessment.gasstation.GasType;
@@ -50,6 +51,11 @@ public class GasStationManager implements GasStation {
      */
     private AtomicLong revenue;
     
+    /**
+     * Util Logger instances - for logging to console
+     */
+    private static Logger LOG = Logger.getLogger(GasStationManager.class.getName());
+    
     public GasStationManager(){
         
         // Initializations
@@ -88,7 +94,61 @@ public class GasStationManager implements GasStation {
         //Checks for gas too expensive
         checkGasTooExpensive(type, maxPricePerLiter);
         
+        //Price that customer have to pay
+        double priceToPay = 0.0d;
         
+        //Check for if the gas pump
+        boolean gasPumpFound = false;
+        
+        LOG.info("Requested for gas pump type +"+ type +" with amount "+ amountInLiters);
+        
+        //Loops through all gas pumps to get right gas pump
+         for(GasPump gasPump : gasPumps){
+             
+             //Checks for right gas pump per type request
+             if(gasPump.getGasType().equals(type)){
+                 
+                 LOG.info("Found the right gas pump : "+ gasPump.getGasType().name());
+                 
+                 //Price of gas type
+                 double gasTypePrice = gasTypePrices.get(gasPump.getGasType());
+                 
+                 //Lock gas pump for thread safety , one gas pump operation at a time
+                 synchronized(gasPump){
+                     
+                     //Checks if gas pump has enough fuel
+                     if(gasPump.getRemainingAmount() >= amountInLiters){
+                         
+                        //Serves gas with amountInLiters value
+                         gasPump.pumpGas(amountInLiters);
+                         
+                         priceToPay = amountInLiters * gasTypePrice;
+                         
+                         noOfSales.incrementAndGet();
+                         revenue.addAndGet((long) priceToPay);
+                         
+                         gasPumpFound = true;
+                         
+                         LOG.info(gasPump.getGasType().name()+" gas pump remaining amount of "+ gasPump.getRemainingAmount());
+                         
+                         break;
+                     }
+                     
+                 }
+             }
+         }
+         
+         
+         //Check if no gas pump was found
+         if(!gasPumpFound){
+             
+             noOfCancellationsNoGas.incrementAndGet();
+             throw new NotEnoughGasException();
+         }
+         
+         LOG.info("Price to pay "+priceToPay);
+         
+         return priceToPay;
     }
     
     /**
