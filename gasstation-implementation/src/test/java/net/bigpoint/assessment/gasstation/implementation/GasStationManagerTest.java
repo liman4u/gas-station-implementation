@@ -2,6 +2,8 @@ package net.bigpoint.assessment.gasstation.implementation;
 
 import java.util.concurrent.TimeUnit;
 import net.bigpoint.assessment.gasstation.GasType;
+import net.bigpoint.assessment.gasstation.exceptions.GasTooExpensiveException;
+import net.bigpoint.assessment.gasstation.exceptions.NotEnoughGasException;
 import org.junit.Test;
 
 /**
@@ -30,7 +32,11 @@ public class GasStationManagerTest extends BaseGasStationManagerTest{
         
     }
     
-    
+    /**
+     * Test for buying gas with 3 simulated customers
+     * 
+     * @throws InterruptedException 
+     */
     @Test
     public void testGasStation() throws InterruptedException{
         
@@ -46,4 +52,20 @@ public class GasStationManagerTest extends BaseGasStationManagerTest{
         
     }
     
+    /**
+     * Test for not enough gas exception
+     * 
+     * @throws InterruptedException 
+     */
+    @Test(expected = NotEnoughGasException.class)
+    public void testNotEnoughGasException() throws InterruptedException{
+        executorService.execute(new Customer(GasType.REGULAR, SUPER_FUEL_LITRES, REGULAR_FUEL_PRICE,1));
+        
+        executorService.shutdown();
+        
+        executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
+        
+    }
+    
+   
 }
