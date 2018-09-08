@@ -77,7 +77,11 @@ public class BaseGasStationManagerTest  extends TestCase{
         executorService.shutdown();
     }
     
-    
+    /**
+     * Customer as gas station client who buys gas
+     * 
+     * @throws NotEnoughGasException , GasTooExpensiveException 
+     */
     public class Customer implements Runnable {
         
         private final GasType gasType;
