@@ -67,5 +67,18 @@ public class GasStationManagerTest extends BaseGasStationManagerTest{
         
     }
     
-   
+    /**
+     * Test for gas too expensive exception
+     * 
+     * @throws InterruptedException 
+     */
+    @Test(expected = GasTooExpensiveException.class)
+    public void testGasTooExpensiveException() throws InterruptedException{
+        executorService.execute(new Customer(GasType.REGULAR, SUPER_FUEL_LITRES, 0,1));
+        
+        executorService.shutdown();
+        
+        executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
+        
+    }
 }
