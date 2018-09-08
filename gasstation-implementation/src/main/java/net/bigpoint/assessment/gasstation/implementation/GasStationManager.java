@@ -82,13 +82,13 @@ public class GasStationManager implements GasStation {
 
     public double buyGas(GasType type, double amountInLiters, double maxPricePerLiter) throws NotEnoughGasException, GasTooExpensiveException {
        
-        //Checks if price of the gas type requested is greater than  - gas too expenisve
-        if(maxPricePerLiter < gasTypePrices.get(type)){
-            
-            //increase number of cancellations for too expensive
-            noOfCancellationsTooExpensive.incrementAndGet();
-            throw new GasTooExpensiveException();
-        }
+        //Checks for validity of params
+        validateParameters(type, amountInLiters, maxPricePerLiter);
+        
+        //Checks for gas too expensive
+        checkGasTooExpensive(type, maxPricePerLiter);
+        
+        
     }
     
     /**
@@ -104,7 +104,25 @@ public class GasStationManager implements GasStation {
             throw new InvalidParameterException();
         }
     }
-
+    
+    /**
+     * Check for gas too expensive
+     * 
+     * @param type
+     * @param maxPricePerLiter 
+     */
+    private void checkGasTooExpensive(GasType type,double maxPricePerLiter) throws GasTooExpensiveException{
+        
+         //Checks if price of the gas type requested is greater than  - gas too expenisve
+        if(maxPricePerLiter < gasTypePrices.get(type)){
+            
+            //increase number of cancellations for too expensive
+            noOfCancellationsTooExpensive.incrementAndGet();
+            throw new GasTooExpensiveException();
+        }
+    }
+    
+    
     /**
      * Get current revenue
      * 
