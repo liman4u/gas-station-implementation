@@ -1,5 +1,6 @@
 package net.bigpoint.assessment.gasstation.implementation;
 
+import java.security.InvalidParameterException;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -80,7 +81,28 @@ public class GasStationManager implements GasStation {
     }
 
     public double buyGas(GasType type, double amountInLiters, double maxPricePerLiter) throws NotEnoughGasException, GasTooExpensiveException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+        //Checks if price of the gas type requested is greater than  - gas too expenisve
+        if(maxPricePerLiter < gasTypePrices.get(type)){
+            
+            //increase number of cancellations for too expensive
+            noOfCancellationsTooExpensive.incrementAndGet();
+            throw new GasTooExpensiveException();
+        }
+    }
+    
+    /**
+     * Validate Parameters passed
+     * 
+     * @param type
+     * @param amountInLiters
+     * @param maxPricePerLiter
+     * @throws IllegalArgumentException 
+     */
+    private void validateParameters(GasType type, double amountInLiters, double maxPricePerLiter) throws IllegalArgumentException {
+        if(type == null || !gasTypePrices.contains(type) ||  amountInLiters <= 0 || maxPricePerLiter <= 0){
+            throw new InvalidParameterException();
+        }
     }
 
     /**
