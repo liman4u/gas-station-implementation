@@ -41,15 +41,19 @@ public class GasStationManagerTest extends BaseGasStationManagerTest{
     @Test
     public void testGasStation() throws InterruptedException{
         
-        executorService.execute(new Customer(GasType.REGULAR, 100, REGULAR_FUEL_PRICE,1));
-        executorService.execute(new Customer(GasType.SUPER, 100, SUPER_FUEL_PRICE,2));
-        executorService.execute(new Customer(GasType.DIESEL, 100, DIESEL_FUEL_PRICE,3));
+        double amountInLitres = 100.0;
+        
+        executorService.execute(new Customer(GasType.REGULAR, amountInLitres, REGULAR_FUEL_PRICE,1));
+        executorService.execute(new Customer(GasType.SUPER, amountInLitres, SUPER_FUEL_PRICE,2));
+        executorService.execute(new Customer(GasType.DIESEL, amountInLitres, DIESEL_FUEL_PRICE,3));
         
         executorService.shutdown();
         
         executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
         
         assertEquals(stationManager.getNumberOfSales(), 3);
+        
+        assertEquals(stationManager.getRevenue(), (amountInLitres * REGULAR_FUEL_PRICE) + (amountInLitres * SUPER_FUEL_PRICE) + (amountInLitres * DIESEL_FUEL_PRICE));
         
     }
     
@@ -126,6 +130,31 @@ public class GasStationManagerTest extends BaseGasStationManagerTest{
         executorService.shutdown();
         
         executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
+        
+    }
+    
+    /**
+     * Test for buying gas concurrently on multiple gas pump
+     * 
+     * @throws InterruptedException 
+     */
+    @Test
+    public void testConcurrentSaleofMultipleGasPump() throws InterruptedException{
+        
+        double amountInLitres = 100.0;
+         
+        executorService.execute(new Customer(GasType.REGULAR, amountInLitres, REGULAR_FUEL_PRICE,1));
+        executorService.execute(new Customer(GasType.REGULAR, amountInLitres, REGULAR_FUEL_PRICE,2));
+        executorService.execute(new Customer(GasType.REGULAR, amountInLitres, REGULAR_FUEL_PRICE,3));
+        
+        
+        executorService.shutdown();
+        
+        executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
+        
+        assertEquals(stationManager.getNumberOfSales(), 3);
+        
+        assertEquals(stationManager.getRevenue(), 3*(amountInLitres * REGULAR_FUEL_PRICE) );
         
     }
     
