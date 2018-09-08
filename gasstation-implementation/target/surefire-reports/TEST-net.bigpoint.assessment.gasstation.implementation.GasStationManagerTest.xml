@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" time="10.081" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" time="10.08" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib"/>
@@ -63,10 +63,11 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testInvalidGasType" time="0.02"/>
-  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testGasTooExpensiveException" time="0"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testInvalidMaximumPricePerLitre" time="0.018"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testInvalidGasType" time="0"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testGasTooExpensiveException" time="0.001"/>
   <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testGasStationSetup" time="0"/>
-  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testGasStation" time="10.015"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testGasStation" time="10.017"/>
   <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testInvalidAmountInLitres" time="0.001"/>
   <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testNotEnoughGasException" time="0.003"/>
 </testsuite>
