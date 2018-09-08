@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.bigpoint.assessment.gasstation.GasPump;
 import net.bigpoint.assessment.gasstation.GasStation;
@@ -87,7 +88,8 @@ public class GasStationManager implements GasStation {
     }
 
     public double buyGas(GasType type, double amountInLiters, double maxPricePerLiter) throws NotEnoughGasException, GasTooExpensiveException {
-       
+      
+        
         //Checks for validity of params
         validateParameters(type, amountInLiters, maxPricePerLiter);
         
@@ -100,7 +102,7 @@ public class GasStationManager implements GasStation {
         //Check for if the gas pump
         boolean gasPumpFound = false;
         
-        LOG.info("Requested for gas pump type +"+ type +" with amount "+ amountInLiters);
+        LOG.log(Level.INFO, "Requested for gas pump type {0} with amount {1}", new Object[]{type, amountInLiters});
         
         //Loops through all gas pumps to get right gas pump
          for(GasPump gasPump : gasPumps){
@@ -108,7 +110,7 @@ public class GasStationManager implements GasStation {
              //Checks for right gas pump per type request
              if(gasPump.getGasType().equals(type)){
                  
-                 LOG.info("Found the right gas pump : "+ gasPump.getGasType().name());
+                 LOG.log(Level.INFO, "Found the right gas pump : {0}", gasPump.getGasType().name());
                  
                  //Price of gas type
                  double gasTypePrice = gasTypePrices.get(gasPump.getGasType());
@@ -129,7 +131,7 @@ public class GasStationManager implements GasStation {
                          
                          gasPumpFound = true;
                          
-                         LOG.info(gasPump.getGasType().name()+" gas pump remaining amount of "+ gasPump.getRemainingAmount());
+                         LOG.log(Level.INFO, "{0} gas pump remaining amount of {1}", new Object[]{gasPump.getGasType().name(), gasPump.getRemainingAmount()});
                          
                          break;
                      }
@@ -146,7 +148,7 @@ public class GasStationManager implements GasStation {
              throw new NotEnoughGasException();
          }
          
-         LOG.info("Price to pay "+priceToPay);
+         LOG.log(Level.INFO, "Price to pay {0}", priceToPay);
          
          return priceToPay;
     }
@@ -160,7 +162,7 @@ public class GasStationManager implements GasStation {
      * @throws IllegalArgumentException 
      */
     private void validateParameters(GasType type, double amountInLiters, double maxPricePerLiter) throws IllegalArgumentException {
-        if(type == null || !gasTypePrices.contains(type) ||  amountInLiters <= 0 || maxPricePerLiter <= 0){
+        if(type == null || !gasTypePrices.containsKey(type) ||  amountInLiters <= 0 || maxPricePerLiter <= 0){
             throw new InvalidParameterException();
         }
     }

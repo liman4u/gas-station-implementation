@@ -30,7 +30,16 @@ public class BaseGasStationManagerTest  extends TestCase{
     protected final static double SUPER_FUEL_PRICE = 2.00;
     protected final static double DIESEL_FUEL_PRICE = 3.00;
     
+    //Service for running tasks in asynchronous mode
     protected ExecutorService executorService;
+    
+    //Maximum waiting time in queue
+    protected final static int MAXIMUM_WAITING_TIME = 300;
+    
+     /**
+     * Util Logger instances - for logging to console
+     */
+    private static Logger LOG = Logger.getLogger(GasStationManagerTest.class.getName());
    
     
     @Override
@@ -87,23 +96,28 @@ public class BaseGasStationManagerTest  extends TestCase{
         private final GasType gasType;
         private final double amountInLitres;
         private final double maxPricePerLitre;
+        private final int customerId;
         
 
-        public Customer(GasType gasType, double amountInLitres, double maxPricePerLitre) {
+        public Customer(GasType gasType, double amountInLitres, double maxPricePerLitre,int customerId) {
             this.gasType = gasType;
             this.amountInLitres = amountInLitres;
             this.maxPricePerLitre = maxPricePerLitre;
+            this.customerId = customerId;
         }
         
         
 
         public void run() {
             try {
+                
+                LOG.log(Level.INFO, "Customer - {0} buying gas", customerId);
                 stationManager.buyGas(gasType, amountInLitres, maxPricePerLitre);
             } catch (NotEnoughGasException ex) {
-                Logger.getLogger(BaseGasStationManagerTest.class.getName()).log(Level.SEVERE, null, ex);
+                
+                LOG.log(Level.SEVERE, "Not enough gas for customer - {0}", customerId);
             } catch (GasTooExpensiveException ex) {
-                Logger.getLogger(BaseGasStationManagerTest.class.getName()).log(Level.SEVERE, null, ex);
+                LOG.log(Level.SEVERE, "Gas too expensive for customer - {0}", customerId);
             }
         }
         
