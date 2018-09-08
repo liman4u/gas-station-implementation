@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest
+Test set: net.bigpoint.assessment.gasstation.implementation.BaseGasStationManagerTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 40.092 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec

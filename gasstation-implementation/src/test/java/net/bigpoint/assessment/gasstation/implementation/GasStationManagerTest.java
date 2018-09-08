@@ -15,23 +15,7 @@ import org.junit.Test;
  */
 public class GasStationManagerTest extends BaseGasStationManagerTest{
     
-    /**
-     * Test for setup of gas station , test for prices and number of gas pumps
-     */
-    @Test
-    public void testGasStationSetup(){
-        
-        assertNotNull(stationManager);
-        
-        //Test if all gas type have prices 
-        assertTrue(stationManager.getPrice(GasType.REGULAR) == REGULAR_FUEL_PRICE);
-        assertTrue(stationManager.getPrice(GasType.SUPER) == SUPER_FUEL_PRICE);
-        assertTrue(stationManager.getPrice(GasType.DIESEL) == DIESEL_FUEL_PRICE);
-        
-        
-        assertEquals(stationManager.getGasPumps().size(),6);
-        
-    }
+    
     
     /**
      * Test for buying gas with 3 simulated customers

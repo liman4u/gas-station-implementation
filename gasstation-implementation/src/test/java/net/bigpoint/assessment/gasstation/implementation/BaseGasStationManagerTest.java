@@ -5,10 +5,14 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import junit.framework.TestCase;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
 import net.bigpoint.assessment.gasstation.GasPump;
 import net.bigpoint.assessment.gasstation.GasType;
 import net.bigpoint.assessment.gasstation.exceptions.GasTooExpensiveException;
 import net.bigpoint.assessment.gasstation.exceptions.NotEnoughGasException;
+import org.junit.Test;
 
 /**
  *
@@ -76,6 +80,24 @@ public class BaseGasStationManagerTest  extends TestCase{
         stationManager.addGasPump(gasPumpDiesel2);
         
         executorService = Executors.newFixedThreadPool(10);
+        
+    }
+    
+    /**
+     * Test for setup of gas station , test for prices and number of gas pumps
+     */
+    @Test
+    public void testGasStationSetup(){
+        
+        assertNotNull(stationManager);
+        
+        //Test if all gas type have prices 
+        assertTrue(stationManager.getPrice(GasType.REGULAR) == REGULAR_FUEL_PRICE);
+        assertTrue(stationManager.getPrice(GasType.SUPER) == SUPER_FUEL_PRICE);
+        assertTrue(stationManager.getPrice(GasType.DIESEL) == DIESEL_FUEL_PRICE);
+        
+        
+        assertEquals(stationManager.getGasPumps().size(),6);
         
     }
     
