@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="8" failures="0" name="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" time="40.092" errors="0" skipped="0">
+<testsuite tests="10" failures="0" name="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" time="40.252" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib"/>
@@ -14,6 +14,7 @@
     <property name="user.country" value="GH"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="unknown"/>
+    <property name="test" value="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="user.dir" value="/Users/limanadamu/NetBeansProjects/gas-station-callenge/gasstation-implementation"/>
     <property name="java.runtime.version" value="1.8.0_181-b13"/>
@@ -25,7 +26,7 @@
 "/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="os.name" value="Mac OS X"/>
-    <property name="maven.ext.class.path" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/maven-nblib/netbeans-eventspy.jar"/>
+    <property name="maven.ext.class.path" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/maven-nblib/netbeans-eventspy.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/maven-nblib/netbeans-cos.jar"/>
     <property name="classworlds.conf" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/maven/bin/m2.conf"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/Users/limanadamu/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
@@ -44,7 +45,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/maven-nblib/netbeans-eventspy.jar clean install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest -Dmaven.ext.class.path=/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/maven-nblib/netbeans-eventspy.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/maven-nblib/netbeans-cos.jar surefire:test"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -62,12 +63,14 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testInvalidMaximumPricePerLitre" time="0.018"/>
-  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testInvalidGasType" time="0"/>
-  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testGasTooExpensiveException" time="0"/>
-  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testGasStation" time="10.014"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testInvalidMaximumPricePerLitre" time="0.026"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testInvalidGasType" time="0.001"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testNonWholeNumberAmountInLitres" time="0.135"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testGasTooExpensiveException" time="0.001"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testGasStation" time="10.011"/>
   <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testConcurrentSaleofMultipleGasPump" time="30.015"/>
   <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testInvalidAmountInLitres" time="0.001"/>
-  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testNotEnoughGasException" time="0.004"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testNegativerAmountInLitres" time="0.001"/>
+  <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testNotEnoughGasException" time="0.003"/>
   <testcase classname="net.bigpoint.assessment.gasstation.implementation.GasStationManagerTest" name="testGasStationSetup" time="0"/>
 </testsuite>

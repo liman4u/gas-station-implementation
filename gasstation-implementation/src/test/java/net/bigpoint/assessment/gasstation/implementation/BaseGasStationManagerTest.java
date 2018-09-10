@@ -30,15 +30,18 @@ public class BaseGasStationManagerTest  extends TestCase{
     protected final static double DIESEL_FUEL_LITRES = 3000;
     
     // Fuel prices per litre
-    protected final static double REGULAR_FUEL_PRICE = 1.00;
-    protected final static double SUPER_FUEL_PRICE = 2.00;
-    protected final static double DIESEL_FUEL_PRICE = 3.00;
+    protected final static double REGULAR_FUEL_PRICE = 0.50;
+    protected final static double SUPER_FUEL_PRICE = 1.70;
+    protected final static double DIESEL_FUEL_PRICE = 3.20;
     
     //Service for running tasks in asynchronous mode
     protected ExecutorService executorService;
     
     //Maximum waiting time in queue
     protected final static int MAXIMUM_WAITING_TIME = 300;
+    
+    //Maximum number of executors
+    protected final static int MAXIMUM_EXECUTORS = 10;
     
      /**
      * Util Logger instances - for logging to console
@@ -79,7 +82,7 @@ public class BaseGasStationManagerTest  extends TestCase{
         stationManager.addGasPump(gasPumpDiesel1);
         stationManager.addGasPump(gasPumpDiesel2);
         
-        executorService = Executors.newFixedThreadPool(10);
+        executorService = Executors.newFixedThreadPool(MAXIMUM_EXECUTORS);
         
     }
     
@@ -133,7 +136,7 @@ public class BaseGasStationManagerTest  extends TestCase{
         public void run() {
             try {
                 
-                LOG.log(Level.INFO, "Customer - {0} buying gas", customerId);
+                LOG.log(Level.INFO, "Customer - {0} buying gas with gas type - {1} , amount in litres - {2} and max price - {3}",new Object[]{ customerId,amountInLitres,maxPricePerLitre});
                 stationManager.buyGas(gasType, amountInLitres, maxPricePerLitre);
             } catch (NotEnoughGasException ex) {
                 

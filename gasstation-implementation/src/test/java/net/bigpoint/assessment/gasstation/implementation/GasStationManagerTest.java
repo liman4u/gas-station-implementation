@@ -143,4 +143,36 @@ public class GasStationManagerTest extends BaseGasStationManagerTest{
     }
     
     
+    
+    /**
+     * Test for non whole number amount in litres
+     * 
+     * @throws InterruptedException 
+     */
+    @Test
+    public void testNonWholeNumberAmountInLitres() throws InterruptedException{
+        executorService.execute(new Customer(GasType.REGULAR, 1.33, REGULAR_FUEL_PRICE,1));
+        
+        executorService.shutdown();
+        
+        executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
+        
+    }
+    
+    
+    /**
+     * Test for negative amount in litres
+     * 
+     * @throws InterruptedException 
+     */
+    @Test(expected = InvalidParameterException.class)
+    public void testNegativerAmountInLitres() throws InterruptedException{
+        executorService.execute(new Customer(GasType.REGULAR, -1, REGULAR_FUEL_PRICE,1));
+        
+        executorService.shutdown();
+        
+        executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
+        
+    }
+    
 }
