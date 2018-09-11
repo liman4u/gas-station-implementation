@@ -87,6 +87,17 @@ public class GasStationManager implements GasStation {
       return this.gasPumps;
     }
 
+    /**
+     * 
+     * Customer buys gas specifying gas type, amount in litres and maximum price per litre
+     * 
+     * @param type
+     * @param amountInLiters
+     * @param maxPricePerLiter
+     * @return
+     * @throws NotEnoughGasException
+     * @throws GasTooExpensiveException 
+     */
     public double buyGas(GasType type, double amountInLiters, double maxPricePerLiter) throws NotEnoughGasException, GasTooExpensiveException {
       
         
@@ -119,7 +130,7 @@ public class GasStationManager implements GasStation {
                  synchronized(gasPump){
                      
                      //Checks if gas pump has enough fuel
-                     if(gasPump.getRemainingAmount() >= amountInLiters){
+                     if(gasPump.getRemainingAmount() >= amountInLiters){ 
                          
                         //Serves gas with amountInLiters value
                          gasPump.pumpGas(amountInLiters);
@@ -238,7 +249,10 @@ public class GasStationManager implements GasStation {
      * @param price 
      */
     public void setPrice(GasType type, double price) {
-        this.gasTypePrices.put(type, price);
+        synchronized(this) {
+            this.gasTypePrices.put(type, price);
+        }
+        
     }
     
 }

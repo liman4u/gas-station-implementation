@@ -2,6 +2,7 @@ package net.bigpoint.assessment.gasstation.implementation;
 
 import java.security.InvalidParameterException;
 import java.util.concurrent.TimeUnit;
+import net.bigpoint.assessment.gasstation.GasPump;
 import net.bigpoint.assessment.gasstation.GasType;
 import net.bigpoint.assessment.gasstation.exceptions.GasTooExpensiveException;
 import net.bigpoint.assessment.gasstation.exceptions.NotEnoughGasException;
@@ -14,8 +15,8 @@ import org.junit.Test;
  * Tests for gas station manager
  */
 public class GasStationManagerTest extends BaseGasStationManagerTest{
-    
-    
+
+
     
     /**
      * Test for buying gas with 3 simulated customers
@@ -143,6 +144,36 @@ public class GasStationManagerTest extends BaseGasStationManagerTest{
     }
     
     
+      /**
+     * Test for buying gas concurrently on multiple gas pump with the same gas type
+     * 
+     * @throws InterruptedException 
+     */
+    @Test
+    public void testConcurrentSaleofMultipleGasPumpType() throws InterruptedException{
+        
+        //Gas Pumps - Regular , additional gas pumps to already added 2
+        GasPump gasPumpRegular3 = new GasPump(GasType.REGULAR, REGULAR_FUEL_LITRES);
+        
+        //Add 3rd gas pump
+        stationManager.addGasPump(gasPumpRegular3);
+        
+        double amountInLitres = 100.0;
+         
+        executorService.execute(new Customer(GasType.REGULAR, amountInLitres, REGULAR_FUEL_PRICE,1));
+        executorService.execute(new Customer(GasType.REGULAR, amountInLitres, REGULAR_FUEL_PRICE,2));
+        
+        
+        executorService.shutdown();
+        
+        executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
+        
+        assertEquals(stationManager.getNumberOfSales(), 2);
+        
+        assertEquals(stationManager.getRevenue(), 2*(amountInLitres * REGULAR_FUEL_PRICE) );
+        
+    }
+    
     
     /**
      * Test for non whole number amount in litres
@@ -174,5 +205,7 @@ public class GasStationManagerTest extends BaseGasStationManagerTest{
         executorService.awaitTermination(MAXIMUM_WAITING_TIME, TimeUnit.SECONDS);
         
     }
+
+
     
 }
